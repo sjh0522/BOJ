@@ -9,40 +9,41 @@ long long dist[MAX];
 vector<pair<int, int>> adj[MAX];
 
 int main(void) {
-	freopen("input.txt", "r", stdin);
+	//freopen("input.txt", "r", stdin);
 	int N, M;
 	scanf("%d %d", &N, &M);
-	
+
+	// 0. ì…ë ¥
 	for (int i = 1; i <= M; i++) {
 		int a, b, c;
 		scanf("%d %d %d", &a, &b, &c);
 		adj[a].push_back(make_pair(b, c));
 	}
 
-	// º§¸¸-Æ÷µå ½ÃÀÛ //
-	// k¹øÂ° ·çÇÁ¿¡¼­´Â ½ÃÀÛÁ¡À¸·ÎºÎÅÍ °¢ Á¤Á¡À¸·Î k°³ÀÇ °£¼±À» °ÅÃÄ¼­ µµ´ŞÇÒ ¼ö ÀÖ´Â ÃÖ´Ü°æ·Î¸¦ ´Ù °»½Å //
-	// 1. ÀÚ·á ±¸Á¶ ÃÊ±âÈ­
-	bool minusCycle = false;
+	// ë²¨ë§Œ-í¬ë“œ //
+	// 1. ì‹œì‘ì  ì´ˆê¸°í™”
 	fill(dist, dist + N + 1, INF);
+	bool minusCycle = false;
 	dist[1] = 0;
 
-	// 2. °¡´ÉÇÑ ÃÖ´Ü °æ·Î´Â ÃÖ´ë (N-1)°³ °£¼± Áö³²
-	//    (N-1) ·çÇÁ + minusCycle Á¸Àç ¿©ºÎ È®ÀÎ
-	for (int k = 1; k <= N; k++) {
-		// 2-1. (N-1) ·çÇÁ¿¡ °ÉÃÄ °¢ Á¤Á¡ÀÌ k°³ °£¼±À» °ÅÃÄ¿À´Â ÃÖ´Ü°æ·Î °»½Å
-		for (int currNode = 1; currNode <= N; currNode++) {
-			for (int j = 0; j < adj[currNode].size(); j++) {
-				int nextNode = adj[currNode][j].first;
-				int currToNextNodeDist = adj[currNode][j].second;
-				// 2-2. currNode °¡ INF ÀÌ¸é ÀÇ¹Ì°¡ ¾øÀ½
-				if (dist[currNode] != INF && dist[nextNode] > dist[currNode] + currToNextNodeDist) {
-					dist[nextNode] = dist[currNode] + currToNextNodeDist;
-					// 2-2. N¹øÂ° ·çÇÁ¿¡ °ªÀÌ °»½ÅµÇ¸é minusCycle Á¸Àç
-					if (k == N) minusCycle = true;
+	// 2-1. (N-1) loop + minusCycle í™•ì¸
+	for (int n = 1; n <= N; n++) {
+		// 2-2. currnode íƒìƒ‰
+		for (int currnode = 1; currnode <= N; currnode++) {
+			// 2-3. adj íƒìƒ‰
+			for (int j = 0; j < adj[currnode].size(); j++) {
+				int nextnode = adj[currnode][j].first;
+				int distFromCurrnodeToNextnode = adj[currnode][j].second;
+				// 2-4. ìµœì†Œê°’ ê°±ì‹ , currnodeê°€ INFì´ë©´ ì˜ë¯¸ ì—†ìŒ
+				if (dist[currnode] != INF && dist[nextnode] > dist[currnode] + distFromCurrnodeToNextnode) {
+					dist[nextnode] = dist[currnode] + distFromCurrnodeToNextnode;
+					//2-5. minusCycle ì—¬ë¶€ í™•ì¸, Në²ˆì§¸ ë£¨í”„ì— ê°’ì´ ê°±ì‹ ë˜ë©´ minusCycle ì¡´ì¬
+					if (n == N) minusCycle = true;
 				}
 			}
 		}
 	}
+
 	if (minusCycle) puts("-1");
 	else {
 		for (int i = 2; i <= N; i++)
