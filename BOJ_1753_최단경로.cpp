@@ -5,60 +5,49 @@
 #define INF 1000000000
 using namespace std;
 
-vector<pair<int, int>> adj[MAX];
 int dist[MAX];
-
-void dijkstra(int start) {
-	// 2-1. pq »ı¼º, start ³ëµå pq¿¡ »ğÀÔ
-	priority_queue<pair<int, int>> pq;
-	pq.push(make_pair(0, start));
-	dist[start] = 0;
-
-	// dijkstra Å½»ö ½ÃÀÛ
-	while (!pq.empty()) {
-		// 2-2. curr ³ëµåºÎÅÍ ½ÃÀÛ
-		int currNode = pq.top().second;
-		int distAtCurrNode = -pq.top().first;
-		pq.pop();
-
-		// 2-3. curr °£¼±ÀÇ dist°¡ Áö±İ±îÁö Ã£Àº curr ÀÇ distº¸´Ù Å©¸é skip
-		if (dist[currNode] < distAtCurrNode) continue;
-
-		// 2.4 currÀÇ adj ³ëµå Å½»ö
-		for (int j = 0; j < adj[currNode].size(); j++) {
-			int nextNode = adj[currNode][j].first;
-			int currToNextDist = adj[currNode][j].second;
-
-			// 2-5. curr -> nextNode °æ·Î°¡ ´õ ÂªÀº °æ¿ì
-			if (dist[nextNode] > dist[currNode] + currToNextDist) {
-				dist[nextNode] = dist[currNode] + currToNextDist;
-				pq.push(make_pair(-dist[nextNode], nextNode));
-			}
-		}
-	}
-}
+vector<pair<int, int>> adj[MAX];
 
 int main(void) {
 	freopen("input.txt", "r", stdin);
 	int V, E, K;
 	scanf("%d %d %d", &V, &E, &K);
-	//printf("%d %d %d\n", V, E, K);
-	
+
+	// 0. ì…ë ¥
 	for (int i = 1; i <= E; i++) {
 		int u, v, w;
 		scanf("%d %d %d", &u, &v, &w);
-		//printf("%d %d %d\n", u, v, w);
 		adj[u].push_back(make_pair(v, w));
 	}
-	
-	// dijkstra ½ÃÀÛ //
-	// 1. °á°ú ÀúÀå ¹è¿­ ÃÊ±âÈ­
+
+	// dijkstra ì‹œì‘ //
+	// 1-1. ì‹œì‘ì  ì´ˆê¸°í™”
 	fill(dist, dist + V + 1, INF);
+		
+	// 1-2. ì‹œì‘ì  queueì— ì‚½ì…
+	priority_queue<pair<int, int>> pq;
+	dist[K] = 0; 
+	pq.push(make_pair(0, K));  // (w, n)
 
-	// 2. dijkstra
-	dijkstra(K);
+	// 2. pqê°€ ë¹Œ ë•Œê¹Œì§€ adj ë…¸ë“œ íƒìƒ‰
+	while (!pq.empty()) {
+		int currnode = pq.top().second;
+		int distAtCurrnode = -pq.top().first;
+		pq.pop();
 
-	// 3. °á°ú
+		if (dist[currnode] < distAtCurrnode) continue;
+
+		for (int j = 0; j < adj[currnode].size(); j++) {
+			int nextnode = adj[currnode][j].first;
+			int distFromCurrnodeToNextnode = adj[currnode][j].second;
+			if (dist[nextnode] > dist[currnode] + distFromCurrnodeToNextnode) {
+				dist[nextnode] = dist[currnode] + distFromCurrnodeToNextnode;
+				pq.push(make_pair(-dist[nextnode], nextnode));
+			}
+		}
+	}
+
+	// 3. ê²°ê³¼
 	for (int i = 1; i <= V; i++) {
 		if (dist[i] == INF) printf("INF\n");
 		else printf("%d\n", dist[i]);
