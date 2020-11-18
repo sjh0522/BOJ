@@ -21,6 +21,11 @@ int main(void) {
 	}
 
 	// dijkstra 시작 //
+	/* 1. 출발 노드 선택
+	   2. adj 노드의 최소 거리 갱신
+	   3. queue에 있는 노드 중 거리가 가장 짧은 노드 선택
+	   4. 해당 노드를 거쳐서 adj 노드 탐색 */
+	
 	// 1-1. 시작점 초기화
 	fill(dist, dist + V + 1, INF);
 		
