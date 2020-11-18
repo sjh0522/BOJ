@@ -21,19 +21,19 @@ int main(void) {
 	int n, m;
 	scanf("%d %d", &n, &m);
 
-	// 0-1. parent ÃÊ±âÈ­
+	// 0-1. parent ì´ˆê¸°í™”
 	for (int i = 1; i <= n; i++) {
 		parent[i] = i;
 	}
 
-	// 0-2. ÀÔ·Â
+	// 0-2. ì…ë ¥
 	for (int i = 1; i <= m; i++) {
 		int x, a, b;
 		scanf("%d %d %d", &x, &a, &b);
 
-		// 1. ÇÕÁıÇÕ
+		// 1. í•©ì§‘í•©
 		if (x == 0) unionParent(a, b);
-		// 2. ºÎ¸ğ°¡ °°ÀºÁö È®ÀÎ
+		// 2. ë¶€ëª¨ê°€ ê°™ì€ì§€ í™•ì¸
 		else if (x == 1) {
 			if (getParent(a) == getParent(b)) printf("YES\n");
 			else printf("NO\n");
