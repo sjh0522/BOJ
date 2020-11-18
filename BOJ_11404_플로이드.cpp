@@ -12,25 +12,28 @@ int main(void) {
 	int n, m;
 	scanf("%d %d", &n, &m);
 
-	// 0-1. cost¹è¿­ INF ÃÊ±âÈ­
+	// 0-1. costë°°ì—´ INF ì´ˆê¸°í™”
 	for (int i = 1; i <= n; i++) {
 		for (int j = 1; j <= n; j++) {
 			cost[i][j] = (i == j) ? 0 : INF;
 		}
 	}
-	// 0-2. ÀÔ·Â
+	// 0-2. ìž…ë ¥
 	for (int i = 1; i <= m; i++) {
 		int a, b, c;
 		scanf("%d %d %d", &a, &b, &c);
 		cost[a][b] = min(cost[a][b], c);
 	}
 
-	// floydwarshal //
-	// 1. k = °ÅÃÄ°¡´Â ³ëµå
+	// floydwarshall //
+	/* 1. ì¶œë°œ ë…¸ë“œ ì„ íƒ X
+	   2. 3ì¤‘ í¬ë¬¸ */  
+	
+	// 1. k = ê±°ì³ê°€ëŠ” ë…¸ë“œ
 	for (int k = 1; k <= n; k++) {
-		// 2. i = Ãâ¹ß ³ëµå
+		// 2. i = ì¶œë°œ ë…¸ë“œ
 		for (int i = 1; i <= n; i++) {
-			// 3. j = µµÂø ³ëµå
+			// 3. j = ë„ì°© ë…¸ë“œ
 			for (int j = 1; j <= n; j++) {
 				if (cost[i][j] > cost[i][k] + cost[k][j]) {
 					cost[i][j] = cost[i][k] + cost[k][j];
