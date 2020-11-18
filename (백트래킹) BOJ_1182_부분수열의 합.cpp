@@ -7,27 +7,27 @@ int val[MAX];
 int N, S;
 int cnt, sumAtPrev;
 void dfs(int curr) {
-	// 0. ¸¶Áö¸·
+	// 0. ë§ˆì§€ë§‰
 	if (curr == N) return;
 
-	// 1. ÇöÀç±îÁö ÇÕÀÌ S ¸é cnt++
+	// 1. í˜„ì¬ê¹Œì§€ í•©ì´ S ë©´ cnt++
 	if (sumAtPrev + val[curr] == S) cnt++;
 
-	// 2-1. curr¸¦ Æ÷ÇÔ X
+	// 2-1. currë¥¼ í¬í•¨ X
 	dfs(curr + 1);
 
-	// 2-2. curr¸¦ Æ÷ÇÔ O
+	// 2-2. currë¥¼ í¬í•¨ O
 	sumAtPrev += val[curr];
 	dfs(curr + 1);
 
-	// 3. º¹±Í
+	// 3. ë³µê·€
 	sumAtPrev -= val[curr];
 }
 int main(void) {
 	freopen("input.txt", "r", stdin);
 	scanf("%d %d", &N, &S);
 	
-	// 0. ÀÔ·Â
+	// 0. ì…ë ¥
 	for (int i = 1; i <= N; i++) {
 		scanf("%d", &val[i]);
 	}
