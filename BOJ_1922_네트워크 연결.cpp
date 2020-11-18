@@ -24,30 +24,35 @@ int main(void) {
 	int n, m;
 	scanf("%d %d", &n, &m);
 
-	// 0. �Է�
+	// 0. 입력
 	for (int i = 1; i <= m; i++) {
 		int u, v, w;
 		scanf("%d %d %d", &u, &v, &w);
 		edges.push_back(make_pair(w, make_pair(u, v)));
 	}
 
-	// kruskal //
-	// 1. parent �ʱ�ȭ
+	// kruskal, (아이디어) Union-Find 활용 //
+	/* 1. 모든 간선을 오름차순 정렬
+	   2-1. 간선을 하나씩 차례대로 탐색
+	   2-2. 합집합이 아닐때 연결 */
+	
+	
+	// 1. parent 초기화
 	for (int i = 1; i <= n; i++) {
 		parent[i] = i;
 	}
 
-	// 2. edges �������� ����
+	// 2. edges 오름차순 정렬
 	sort(edges.begin(), edges.end());
 
-	// 3. edges �ϳ��� Ž��
+	// 3. edges 하나씩 탐색
 	int res = 0;
 	for (int i = 0; i < edges.size(); i++) {
 		int w = edges[i].first;
 		int u = edges[i].second.first;
 		int v = edges[i].second.second;
 
-		// parent�� �ٸ�����
+		// parent가 다를때만
 		if (getParent(u) != getParent(v)) {
 			unionParent(u, v);
 			res += w;
