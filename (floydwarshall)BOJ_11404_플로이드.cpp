@@ -25,7 +25,7 @@ int main(void) {
 		cost[a][b] = min(cost[a][b], c);
 	}
 
-	// floydwarshall //
+	// floydwarshall, (아이디어) 3중 포문 //
 	/* 1. 출발 노드 선택 X
 	   2. 3중 포문 */  
 	
