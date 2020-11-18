@@ -21,6 +21,12 @@ int main(void) {
 	}
 
 	// 벨만-포드 //
+	/* 1. 출발 노드 선택
+	   2. 아이디어 : 최소거리는 최대 (N-1) 개의 간선을 지남
+	   3-1. n번째 loop에서 n개의 간선을 거쳐 도달하는 최소 거리 갱신
+	   3-2. N번째 loop에 값이 갱신되면 minus-cycle 존재
+	   4. 2중 for문으로 모든 i->j 탐색 */  
+	   
 	// 1. 시작점 초기화
 	fill(dist, dist + N + 1, INF);
 	bool minusCycle = false;
