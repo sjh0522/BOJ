@@ -12,17 +12,17 @@ bool visited[MAX];
 int cost[MAX];
 
 void bfs(int start) {
-	// 2-1. ½ÃÀÛÁ¡ queue¿¡ »ğÀÔ, visited Ã¼Å©
+	// 2-1. ì‹œì‘ì  queueì— ì‚½ì…, visited ì²´í¬
 	queue<int> q;
 	q.push(start);
 	visited[start] = true;
 
-	// 2-2. queue°¡ ºô¶§±îÁö
+	// 2-2. queueê°€ ë¹Œë•Œê¹Œì§€
 	while (!q.empty()) {
 		int currnode = q.front(); q.pop();
 		for (int j = 0; j < adj[currnode].size(); j++) {
 			int nextnode = adj[currnode][j];
-			// 2-3. ¹æ¹®ÇÑ ÀûÀÌ ¾øÀ¸¸é queue¿¡ »ğÀÔ
+			// 2-3. ë°©ë¬¸í•œ ì ì´ ì—†ìœ¼ë©´ queueì— ì‚½ì…
 			if (visited[nextnode] == false) {
 				visited[nextnode] = true;
 				q.push(nextnode);
@@ -39,7 +39,7 @@ int main(void) {
 	int m;
 	scanf("%d", &m);
 
-	// 0. ÀÔ·Â
+	// 0. ì…ë ¥
 	for (int i = 1; i <= m; i++) {
 		int u, v;
 		scanf("%d %d", &u, &v);
@@ -47,13 +47,13 @@ int main(void) {
 		adj[v].push_back(u);
 	}
 
-	// 1. ÀÚ·á ±¸Á¶ ÃÊ±âÈ­
+	// 1. ìë£Œ êµ¬ì¡° ì´ˆê¸°í™”
 	fill(visited, visited + n + 1, false);
 	fill(cost, cost + n + 1, 0);
 
 	// 2. bfs
 	bfs(s);
 
-	// 3. °á°ú
+	// 3. ê²°ê³¼
 	printf("%d", cost[e] == 0 ? -1 : cost[e]);
 }
