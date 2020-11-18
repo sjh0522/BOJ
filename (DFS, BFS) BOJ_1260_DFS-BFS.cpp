@@ -12,14 +12,14 @@ bool visited[MAX];
 vector<int> adj[MAX];
 
 void dfs(int currnode) {
-	// 2-0. currnode = N+1 ÀÌ¸é Á¾·á
+	// 2-0. currnode = N+1 ì´ë©´ ì¢…ë£Œ
 	if (currnode == N + 1) return;
 
-	// 2-1. ½ÃÀÛÁ¡, visited Ã¼Å©
+	// 2-1. ì‹œì‘ì , visited ì²´í¬
 	visited[currnode] = true;
 	printf("%d ", currnode);
 
-	// 2-2. adj ³ëµå Å½»ö
+	// 2-2. adj ë…¸ë“œ íƒìƒ‰
 	for (int j = 0; j < adj[currnode].size(); j++) {
 		int nextnode = adj[currnode][j];
 		if (!visited[nextnode]) {
@@ -29,18 +29,18 @@ void dfs(int currnode) {
 }
 
 void bfs(int start) {
-	// 2-1. ½ÃÀÛÁ¡, queue¿¡ »ğÀÔ + visited Ã¼Å©
+	// 2-1. ì‹œì‘ì , queueì— ì‚½ì… + visited ì²´í¬
 	queue<int> q;
 	q.push(start), visited[start] = true;
 
-	// 2-2. queue°¡ ºô ¶§±îÁö
+	// 2-2. queueê°€ ë¹Œ ë•Œê¹Œì§€
 	while (!q.empty()) {
 		int currnode = q.front(); q.pop();
 		printf("%d ", currnode);
 
 		for (int j = 0; j < adj[currnode].size(); j++) {
 			int nextnode = adj[currnode][j];
-			// 2-3. ¹æ¹®ÇÑ ÀûÀÌ ¾øÀ¸¸é queue¿¡ »ğÀÔ
+			// 2-3. ë°©ë¬¸í•œ ì ì´ ì—†ìœ¼ë©´ queueì— ì‚½ì…
 			if (!visited[nextnode]) {
 				visited[nextnode] = true;
 				q.push(nextnode);
@@ -53,7 +53,7 @@ int main() {
 	freopen("input.txt", "r", stdin);
 	scanf("%d %d %d", &N, &M, &V);
 	
-	// 0. ÀÔ·Â
+	// 0. ì…ë ¥
 	int u, v;
 	for (int i = 1; i <= M; i++) {
 		scanf("%d %d", &u, &v);
@@ -65,7 +65,7 @@ int main() {
 		sort(adj[i].begin(), adj[i].end());
 	}
 
-	// 1. ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+	// 1. ìë£Œêµ¬ì¡° ì´ˆê¸°í™”
 	fill(visited, visited + N + 1, false);
 	dfs(V);
 	puts("");
