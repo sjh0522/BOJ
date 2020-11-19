@@ -7,20 +7,22 @@
 using namespace std;
 
 int N, M, V;
-int arry[MAX][MAX];
 bool visited[MAX];
 vector<int> adj[MAX];
 
-void dfs(int currnode) {
-	// 2-0. currnode = N+1 이면 종료
-	if (currnode == N + 1) return;
+int arry[MAX][MAX];
+int cnt;
 
-	// 2-1. 시작점, visited 체크
+void dfs(int currnode) {
+	// 2. 종료 조건
+
+	// 3. 시작점, 재귀함수 안으로 들어오면 + visited 체크
 	visited[currnode] = true;
 	printf("%d ", currnode);
 
-	// 2-2. adj 노드 탐색
+	// 4. adj 탐색
 	for (int j = 0; j < adj[currnode].size(); j++) {
+		// 4-1. 방문한 적이 없으면 재귀 호출
 		int nextnode = adj[currnode][j];
 		if (!visited[nextnode]) {
 			dfs(nextnode);
@@ -29,18 +31,19 @@ void dfs(int currnode) {
 }
 
 void bfs(int start) {
-	// 2-1. 시작점, queue에 삽입 + visited 체크
-	queue<int> q;
-	q.push(start), visited[start] = true;
+	// 2. 시작점, queue에 삽입 + visited 체크
+	queue<int> q; visited[start] = true;
+	q.push(start);
 
-	// 2-2. queue가 빌 때까지
+	// 3. queue가 빌 때까지 
 	while (!q.empty()) {
-		int currnode = q.front(); q.pop();
+		int currnode = q.front(); q.pop();		
 		printf("%d ", currnode);
 
+		// 4. adj 탐색
 		for (int j = 0; j < adj[currnode].size(); j++) {
 			int nextnode = adj[currnode][j];
-			// 2-3. 방문한 적이 없으면 queue에 삽입
+			// 4-1. 방문한 적이 없으면 queue에 삽입 + visited 체크
 			if (!visited[nextnode]) {
 				visited[nextnode] = true;
 				q.push(nextnode);
