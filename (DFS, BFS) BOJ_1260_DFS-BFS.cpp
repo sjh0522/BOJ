@@ -9,20 +9,17 @@ using namespace std;
 int N, M, V;
 bool visited[MAX];
 vector<int> adj[MAX];
-
 int arry[MAX][MAX];
-int cnt;
+
 
 void dfs(int currnode) {
-	// 2. 종료 조건
-
-	// 3. 시작점, 재귀함수 안으로 들어오면 + visited 체크
+	// 1. 종료 조건
+	// 2. 시작점, 재귀함수로 들어오면서 visited 체크
 	visited[currnode] = true;
 	printf("%d ", currnode);
 
-	// 4. adj 탐색
+	// 3. (DFS) adj 탐색
 	for (int j = 0; j < adj[currnode].size(); j++) {
-		// 4-1. 방문한 적이 없으면 재귀 호출
 		int nextnode = adj[currnode][j];
 		if (!visited[nextnode]) {
 			dfs(nextnode);
@@ -31,22 +28,21 @@ void dfs(int currnode) {
 }
 
 void bfs(int start) {
-	// 2. 시작점, queue에 삽입 + visited 체크
-	queue<int> q; visited[start] = true;
-	q.push(start);
+	// 1. queue 생성
+	queue<int> q;
 
-	// 3. queue가 빌 때까지 
+	// 2. 시작점, queue에 넣으면서 visited 체크
+	q.push(start); visited[start] = true;	
+
+	// 3. (BFS) queue가 빌 때까지
 	while (!q.empty()) {
-		int currnode = q.front(); q.pop();		
+		int currnode = q.front(); q.pop();
 		printf("%d ", currnode);
-
-		// 4. adj 탐색
+		// 3-1. adj 탐색
 		for (int j = 0; j < adj[currnode].size(); j++) {
 			int nextnode = adj[currnode][j];
-			// 4-1. 방문한 적이 없으면 queue에 삽입 + visited 체크
 			if (!visited[nextnode]) {
-				visited[nextnode] = true;
-				q.push(nextnode);
+				q.push(nextnode); visited[nextnode]=true;
 			}
 		}
 	}
