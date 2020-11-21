@@ -13,7 +13,7 @@ void update(int treeIndex, int start, int end, int index, ll val) {
 		tree[treeIndex] = val; return;
 	}
 	
-	// 2. segment tree 재귀호출
+	// 2. segment tree update 재귀호출 반복
 	int mid = (start + end) / 2;
 	update(treeIndex * 2, start, mid, index, val);
 	update(treeIndex * 2 + 1, mid + 1, end, index, val);
@@ -28,7 +28,7 @@ ll sum(int treeIndex, int start, int end, int left, int right) {
 	if (right < start || end < left) return 0;
 	else if (left <= start && end <= right) return tree[treeIndex];
 
-	// 2. sum update
+	// 2. segment tree sum 재귀호출 반복
 	int mid = (start + end) / 2;
 	return sum(treeIndex * 2, start, mid, left, right) + 
 		   sum(treeIndex * 2 + 1, mid + 1, end, left, right);
@@ -53,5 +53,3 @@ int main(void) {
 		else if (question==2) printf("%lld\n", sum(1, 0, N - 1, b - 1, c - 1));
 	}
 }
-
-
