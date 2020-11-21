@@ -26,28 +26,31 @@ int main(void) {
 	   3. queue에 있는 노드 중 거리가 가장 짧은 노드 선택
 	   4. 해당 노드를 거쳐서 adj 노드 탐색 */
 	
-	// 1-1. 시작점 초기화
+	// 1. 초기화
 	fill(dist, dist + V + 1, INF);
-		
-	// 1-2. 시작점 queue에 삽입
-	priority_queue<pair<int, int>> pq;
-	dist[K] = 0; 
-	pq.push(make_pair(0, K));  // (w, n)
+	
+	// 1.1 시작점 pq에 삽입
+	priority_queue<pair<int, int>> q;
+	q.push(make_pair(0, K));
+	dist[K] = 0;
 
-	// 2. pq가 빌 때까지 adj 노드 탐색
-	while (!pq.empty()) {
-		int currnode = pq.top().second;
-		int distAtCurrnode = -pq.top().first;
-		pq.pop();
+	// 2. queue가 빌 때까지
+	while (!q.empty()) {
+		int currnode = q.top().second;
+		int distToCurrnode = -q.top().first;
+		q.pop();
 
-		if (dist[currnode] < distAtCurrnode) continue;
+		// 2-1. skip 조건
+		if (dist[currnode] < distToCurrnode) continue;
 
+		// 2-2. adj 탐색
 		for (int j = 0; j < adj[currnode].size(); j++) {
 			int nextnode = adj[currnode][j].first;
-			int distFromCurrnodeToNextnode = adj[currnode][j].second;
-			if (dist[nextnode] > dist[currnode] + distFromCurrnodeToNextnode) {
-				dist[nextnode] = dist[currnode] + distFromCurrnodeToNextnode;
-				pq.push(make_pair(-dist[nextnode], nextnode));
+			int disFromCurrnodeToNextnode = adj[currnode][j].second;
+			// 2.3 최소값 비교
+			if (dist[nextnode] > dist[currnode] + disFromCurrnodeToNextnode) {
+				dist[nextnode] = dist[currnode] + disFromCurrnodeToNextnode;
+				q.push(make_pair(-dist[nextnode], nextnode));
 			}
 		}
 	}
