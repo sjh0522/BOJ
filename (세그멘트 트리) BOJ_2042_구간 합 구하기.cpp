@@ -8,28 +8,28 @@ long long tree[MAX * 4];
 int N, M, K;
 
 void update(int treeIndex, int start, int end, int arrIndex, int val) {
-	// 1. Á¾·áÁ¶°Ç
+	// 1. ì¢…ë£Œì¡°ê±´
 	if (arrIndex < start || end < arrIndex) return;	
 	if (start == end) {
 		tree[treeIndex] = val; return;		
 	}
 
-	// 2. ÁÂ/¿ì ³ª´²¼­ ¸»´Ü °ª ±¸ÇÏ·¯ update È£Ãâ
+	// 2. ì¢Œ/ìš° ë‚˜ëˆ ì„œ ë§ë‹¨ ê°’ êµ¬í•˜ëŸ¬ update í˜¸ì¶œ
 	int mid = (start + end) / 2;
 	update(treeIndex * 2, start, mid, arrIndex, val);
 	update(treeIndex * 2 + 1, mid + 1, end, arrIndex, val);
 
-	// 3. tree°ª update
+	// 3. treeê°’ update
 	tree[treeIndex] = tree[treeIndex * 2] + tree[treeIndex * 2 + 1];
 	return;
 }
 
 ll sum(int treeIndex, int start, int end, int left, int right) {
-	// 1. Á¾·áÁ¶°Ç
+	// 1. ì¢…ë£Œì¡°ê±´
 	if (right < start || end < left) return 0;
 	if (left <= start && end <= right) return tree[treeIndex];
 
-	// 2. ÁÂ/¿ì ³ª´²¼­ sum ¿¬»ê
+	// 2. ì¢Œ/ìš° ë‚˜ëˆ ì„œ sum ì—°ì‚°
 	int mid = (start + end) / 2;
 	return sum(treeIndex * 2, start, mid, left, right) + sum(treeIndex * 2 + 1, mid + 1, end, left, right);
 }
@@ -39,14 +39,14 @@ int main() {
 	freopen("input.txt", "r", stdin);
 	scanf("%d %d %d", &N, &M, &K);
 
-	// 0. ÀÔ·Â
+	// 0. ìž…ë ¥
 	for (int i = 0; i < N; i++) {
 		int val;
 		scanf("%d", &val);
 		update(1, 0, N - 1, i, val);
 	}
 
-	// 1. °á°ú
+	// 1. ê²°ê³¼
 	for (int i = 0; i < M + K; i++) {
 		int question, b, c;
 		scanf("%d %d %d", &question, &b, &c);
