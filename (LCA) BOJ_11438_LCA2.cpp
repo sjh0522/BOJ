@@ -12,14 +12,14 @@ int depth[MAX];
 int N;
 
 void getDepth(int currnode, int dep) {
-	// 1. Àç±ÍÇÔ¼ö µé¾î¿À¸é 
+	// 1. ì¬ê·€í•¨ìˆ˜ ë“¤ì–´ì˜¤ë©´ 
 	depth[currnode] = dep;
 	visited[currnode] = true;
 
-	// 2. adj Å½»ö
+	// 2. adj íƒìƒ‰
 	for (int j = 0; j < adj[currnode].size(); j++) {
 		int nextnode = adj[currnode][j];
-		// 2-1. ¹æ¹®ÇÑÀû ÀÖÀ¸¸é skip
+		// 2-1. ë°©ë¬¸í•œì  ìˆìœ¼ë©´ skip
 		if (visited[nextnode]) continue;
 		parent[nextnode][0] = currnode;
 		getDepth(nextnode, dep + 1);
@@ -27,10 +27,10 @@ void getDepth(int currnode, int dep) {
 }
 
 int lca(int a, int b) {
-	// 1. b°¡ ´õ ±íµµ·Ï 
+	// 1. bê°€ ë” ê¹Šë„ë¡ 
 	if (depth[a] > depth[b]) swap(a, b);
 
-	// 2. ±íÀÌ(depth)°¡ °°¾Æ Áú ¶§±îÁö
+	// 2. ê¹Šì´(depth)ê°€ ê°™ì•„ ì§ˆ ë•Œê¹Œì§€
 	for (int j = LOG - 1; j >= 0; j--) {
 		if (depth[b] - depth[a] >= (1 << j)) {
 			b = parent[b][j];
@@ -38,10 +38,10 @@ int lca(int a, int b) {
 	}
 
 	// 3. lca return
-	// 3-1. a¿Í b°¡ °°À¸¸é
+	// 3-1. aì™€ bê°€ ê°™ìœ¼ë©´
 	if (a == b) return a;
 	
-	// 3-2. ºÎ¸ğ°¡ °°¾ÆÁú ¶§ ±îÁö
+	// 3-2. ë¶€ëª¨ê°€ ê°™ì•„ì§ˆ ë•Œ ê¹Œì§€
 	for (int j = LOG - 1; j >= 0; j--) {
 		if (parent[a][j] != parent[b][j]) {
 			a = parent[a][j];
@@ -49,7 +49,7 @@ int lca(int a, int b) {
 		}
 	}
 
-	// 3-3. ºÎ¸ğ ³ëµå return
+	// 3-3. ë¶€ëª¨ ë…¸ë“œ return
 	return parent[a][0];
 }
 
@@ -57,7 +57,7 @@ int main(void) {
 	freopen("input.txt", "r", stdin);
 	scanf("%d", &N);
 
-	// 0. ÀÔ·Â
+	// 0. ì…ë ¥
 	for (int i = 0; i < N - 1; i++) {
 		int u, v;
 		scanf("%d %d", &u, &v);
@@ -65,17 +65,17 @@ int main(void) {
 		adj[v].push_back(u);
 	}
 
-	// 1 . depth ±¸ÇÏ±â
+	// 1 . depth êµ¬í•˜ê¸°
 	getDepth(1, 0);
 
-	// 2. parent ¹è¿­ Ã¤¿ì±â
+	// 2. parent ë°°ì—´ ì±„ìš°ê¸°
 	for (int j = 1; j < LOG; j++) {
 		for (int i = 1; i <= N; i++) {
 			parent[i][j] = parent[parent[i][j - 1]][j - 1];
 		}
 	}
 
-	// 3. Ãâ·Â
+	// 3. ì¶œë ¥
 	int M;
 	scanf("%d", &M);
 	for (int i = 0; i < M; i++) {
