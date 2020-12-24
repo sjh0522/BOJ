@@ -40,7 +40,7 @@ int main(void) {
 		int distToCurrnode = -q.top().first;
 		q.pop();
 
-		// 2-1. skip 조건
+		// 2-1. skip 조건 (currnode까지 다른 경로의 최단거리가 있을 경우 skip)
 		if (dist[currnode] < distToCurrnode) continue;
 
 		// 2-2. adj 탐색
