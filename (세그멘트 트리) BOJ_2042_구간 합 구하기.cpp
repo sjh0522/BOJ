@@ -29,7 +29,7 @@ void update(int treeIndex, int arryStart, int arryEnd, int arryIndex, ll updateV
 
 ll sum(int treeIndex, int arryStart, int arryEnd, int left, int right) {
 	// 1. 종료조건
-	if (right < arryStart || arryEnd < left) return 0;
+	if (arryEnd < left || right < arryStart) return 0;
 	else if(left <= arryStart && arryEnd <= right) {
 		return tree[treeIndex];
 	}
